@@ -1,12 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap'
 import Rating from '../components/Rating'
-import products from '../products'
+import axios from 'axios'
 
 function ProductScreen({match}) {
-    // getting the current product from all products using its id
-    const product = products.find((p) => p._id == match.params.id)
+
+    //setting the state product and setProduct to update it
+    const [product, setProduct] = useState([])
+
+    //using this we will get the data
+    //useEffect gets called every-time automatically
+    useEffect(()=>{
+
+        async function fetchProducts(){
+            // getting data of a product from the backend using id
+            const {data} = await axios.get(`/api/products/${match.params.id}`)
+
+            //adding data in the product list
+            setProduct(data)
+        }
+        fetchProducts()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div>
             <Link to="/" className="btn btn-light my-3">Go Back</Link>
@@ -57,7 +74,7 @@ function ProductScreen({match}) {
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <Button className="btn-block" type='button' disabled={product.countInStock == 0}>
+                            <Button className="btn-block" type='button' disabled={product.countInStock === 0}>
                                 Add to Cart
                             </Button>
                         </ListGroup.Item>
