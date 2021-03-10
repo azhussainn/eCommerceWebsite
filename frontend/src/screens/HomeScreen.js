@@ -11,7 +11,7 @@ import { listProducts } from '../actions/productActions'
 function HomeScreen() {
     const dispatch = useDispatch()
 
-    //using selection we get select the productList
+    //using selector we get select the productList
     const productList = useSelector(state => state.productList)
 
     const {error, loading, products} = productList
