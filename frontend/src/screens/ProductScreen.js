@@ -37,11 +37,11 @@ function ProductScreen({match, history}) {
                     ? <Message variant='danger'>{error}</Message>
                 : (
                     <Row>
-                        <Col md={6}>
+                        <Col md={5} lg={6}>
                             <Image src={product.image}
                                 alt={product.name} fluid />
                         </Col>
-                        <Col md={3}>
+                        <Col md={4} lg={3}>
                             <ListGroup variant="flush">
                                 <ListGroup.Item>
                                     <h3>{product.name}</h3>
