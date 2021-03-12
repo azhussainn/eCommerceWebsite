@@ -21,8 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     #customizing name field
     def get_name(self, obj):
-        name = obj.first_name + " " +  obj.last_name
-        if name == '' or name == " ":
+        name = obj.first_name
+        if name == '':
             name = obj.email
 
         return name
