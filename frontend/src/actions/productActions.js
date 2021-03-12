@@ -38,7 +38,7 @@ export const listProductDetails = (id) => async (dispatch) =>{
         dispatch({type : PRODUCT_DETAILS_REQUEST})
 
         // getting data of the product from the backend using id
-        const {data} = await axios.get(`/api/products/${id}`)
+        const {data} = await axios.get(`/api/product/${id}`)
 
         //returning data to the product Reducer if no error
         dispatch({
