@@ -21,6 +21,7 @@ export const userLoginReducer = (state= { }, action) => {
             //setting state to error message
             return {loading : false, error : action.payload}
 
+        //clearing the state
         case USER_LOGOUT:
             return {}
 
