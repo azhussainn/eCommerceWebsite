@@ -4,13 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { login } from '../actions/userActions'
+import { register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 
-function LoginScreen({location, history}) {
 
+function RegisterScreen({location, history}) {
+
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [message, setMessage] = useState('')
 
     const dispatch = useDispatch()
 
@@ -19,9 +23,9 @@ function LoginScreen({location, history}) {
             location.search.split('=')[1]
             : '/'
 
-    const userLogin = useSelector(state => state.userLogin)
+    const userRegister = useSelector(state => state.userRegister)
 
-    const {error, loading, userInfo} = userLogin
+    const {error, loading, userInfo} = userRegister
 
     //if already logged in the redirect to redirect page
     useEffect(() => {
@@ -32,14 +36,23 @@ function LoginScreen({location, history}) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-
-        //dispatching email and password to userAction
-        dispatch(login(email, password))
+        if(password !== confirmPassword){
+            setMessage("Passwords do not match")
+        }else{
+            //dispatching email and password to userAction
+            dispatch(register(name, email, password))
+        }
     }
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Register</h1>
+            {
+            message &&
+                <Message variant='danger'>
+                    {message}
+                </Message>
+            }
             {error &&
                 <Message variant='danger'>
                     {error}
@@ -47,20 +60,35 @@ function LoginScreen({location, history}) {
             {loading && <Loader/>}
             <Form onSubmit={submitHandler}>
 
+            <Form.Group controlId='name'>
+                    <Form.Label>
+                        Name
+                    </Form.Label>
+                    <Form.Control 
+                        type='name'
+                        placeholder='Enter Name'
+                        value={name}
+                        autoComplete="on"
+                        required
+                        onChange={
+                            (e) => setName(e.target.value)}>
+                    </Form.Control>
+                </Form.Group>
+
                 <Form.Group controlId='email'>
                     <Form.Label>
                         Email Address
                     </Form.Label>
-                    <Form.Control 
+                    <Form.Control
                         type='email'
                         placeholder='Enter Email'
                         value={email}
                         autoComplete="on"
+                        required
                         onChange={
                             (e) => setEmail(e.target.value)}>
                     </Form.Control>
                 </Form.Group>
-
 
                 <Form.Group controlId='password'>
                     <Form.Label>
@@ -71,8 +99,25 @@ function LoginScreen({location, history}) {
                         placeholder='Enter Password'
                         value={password}
                         autoComplete="on"
+                        required
                         onChange={
                             (e) => setPassword(
+                                e.target.value)}>
+                    </Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='passwordConfirm'>
+                    <Form.Label>
+                        Confirm Password
+                    </Form.Label>
+                    <Form.Control
+                        type='password'
+                        placeholder='Confirm Password'
+                        value={confirmPassword}
+                        autoComplete="on"
+                        required
+                        onChange={
+                            (e) => setConfirmPassword(
                                 e.target.value)}>
                     </Form.Control>
                 </Form.Group>
@@ -80,24 +125,24 @@ function LoginScreen({location, history}) {
                 <Button
                     type='submit'
                     variant='primary'>
-                        Sign In
+                        Register
                 </Button>
 
             </Form>
 
-
             <Row className='py-3'>
                 <Col>
-                    New Customer ?
+                    Have an Account ?
                     <Link to={redirect ?
-                        `/register?redirect=${redirect}`
-                        : '/register'}>
-                        Register
+                        `/login?redirect=${redirect}`
+                        : '/login'}>
+                        Sign In
                     </Link>
                 </Col>
             </Row>
+
         </FormContainer>
     )
 }
 
-export default LoginScreen
+export default RegisterScreen
