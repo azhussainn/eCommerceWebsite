@@ -12,6 +12,12 @@ import {
         USER_DETAILS_REQUEST,
         USER_DETAILS_SUCCESS,
         USER_DETAILS_FAIL,
+        USER_DETAILS_RESET,
+
+        USER_UPDATE_PROFILE_REQUEST,
+        USER_UPDATE_PROFILE_SUCCESS,
+        USER_UPDATE_PROFILE_FAIL,
+        USER_UPDATE_PROFILE_RESET
 
      } from '../constants/userConstants'
 
@@ -80,6 +86,31 @@ export const userDetailsReducer = (state= { user : {}}, action) => {
             //setting state to error message
             return {loading : false, error : action.payload}
 
+        case USER_DETAILS_RESET:
+            return {user : {}}
+
+        default:
+            return state
+    }
+}
+
+export const userUpdateProfileReducer = (state= { }, action) => {
+    switch(action.type){
+        case USER_UPDATE_PROFILE_REQUEST:
+
+            //setting state to empty list
+            return {loading : true}
+
+        case USER_UPDATE_PROFILE_SUCCESS:
+            //setting state to payload
+            return {loading : false, success : true,  userInfo : action.payload}
+
+        case USER_UPDATE_PROFILE_FAIL:
+            //setting state to error message
+            return {loading : false, error : action.payload}
+
+        case USER_UPDATE_PROFILE_RESET:
+            return {}
 
         default:
             return state

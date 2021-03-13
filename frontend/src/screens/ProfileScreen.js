@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { getUserDetails } from '../actions/userActions'
-
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 function ProfileScreen({history}) {
 
@@ -24,6 +24,10 @@ function ProfileScreen({history}) {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
+    //getting success from reducer in order to clear state
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const {success} = userUpdateProfile
+
     //if already logged in the redirect to redirect page
     useEffect(() => {
         if(!userInfo){
@@ -31,7 +35,13 @@ function ProfileScreen({history}) {
         }else{
 
             //checking if user info is not already present
-            if(!user || !user.name){
+            // on success i.e updating the profile => reset state
+            if(!user || !user.name || success){
+
+                //removing previous info of user from the state
+                dispatch(
+                    {type : USER_UPDATE_PROFILE_RESET}
+                    )
 
                 //getting user info
                 dispatch(getUserDetails('profile'))
@@ -42,14 +52,21 @@ function ProfileScreen({history}) {
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, success])
 
     const submitHandler = (e) => {
         e.preventDefault()
         if(password !== confirmPassword){
             setMessage("Passwords do not match")
         }else{
-            console.log("Updating....")
+            dispatch(updateUserProfile(
+                {
+                'id' : user._id,
+                'name' : name,
+                'email' : email,
+                'password' : password
+            }))
+            setMessage("")
         }
     }
 
