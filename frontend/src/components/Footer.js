@@ -11,7 +11,6 @@ function Footer() {
                     </Col>
                 </Row>
             </Container>
-            Footer
         </footer>
     )
 }
