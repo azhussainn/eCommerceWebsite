@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button} from 'react-bootstrap'
 import FormContainer from '../components/FormContainer'
+import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
 
 function ShippingScreen({history}) {
@@ -9,17 +10,16 @@ function ShippingScreen({history}) {
     //getting cart from state
     const cart = useSelector(state => state.cart)
 
-
-    const dispatch = useDispatch()
-
     //getting shipping Address from cart
     const {shippingAddress} = cart
+
+    const dispatch = useDispatch()
 
     //if state contains shipping data already then just load it in the form
     const [address, setAddress] = useState(shippingAddress.address)
     const [city, setCity] = useState(shippingAddress.city)
     const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
-    const [country, setCountry] = useState(setAddress.country)
+    const [country, setCountry] = useState(shippingAddress.country)
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -31,6 +31,9 @@ function ShippingScreen({history}) {
 
     return (
         <FormContainer>
+
+            <CheckoutSteps step1 step2/>
+
             <h1>Shipping</h1>
             <Form onSubmit={submitHandler}>
 
