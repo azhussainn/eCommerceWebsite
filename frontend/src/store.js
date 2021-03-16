@@ -14,7 +14,8 @@ import {
 
 import {
     orderCreateReducer,
-    orderDetailsReducer }
+    orderDetailsReducer,
+    orderPayReducer }
     from './reducers/orderReducers'
 
 
@@ -30,6 +31,7 @@ const reducer = combineReducers({
     userUpdateProfile : userUpdateProfileReducer,
     orderCreate : orderCreateReducer,
     orderDetails : orderDetailsReducer,
+    orderPay : orderPayReducer,
 })
 
 //if cart items exist -> get them
