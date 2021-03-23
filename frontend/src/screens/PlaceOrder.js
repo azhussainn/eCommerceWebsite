@@ -38,7 +38,7 @@ function PlaceOrder({ history }) {
                 type : ORDER_CREATE_RESET
             })
         }
-    }, [success, history, dispatch])
+    }, [success, history, dispatch, order])
 
     const placeOrder = () => {
         dispatch(createOrder({
