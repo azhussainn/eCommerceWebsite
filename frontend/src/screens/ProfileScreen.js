@@ -34,7 +34,7 @@ function ProfileScreen({history}) {
     const {
         loading : loadingOrders,
         error : errorOrders,
-        orders : orders} = orderListMy
+        orders} = orderListMy
 
     //if already logged in the redirect to redirect page
     useEffect(() => {
