@@ -44,7 +44,8 @@ function ProfileScreen({history}) {
 
             //checking if user info is not already present
             // on success i.e updating the profile => reset state
-            if(!user || !user.name || success){
+            //also reset profile state if id of current user does not match the id of the logged in user
+            if(!user || !user.name || success || userInfo._id !== user._id){
 
                 //removing previous info of user from the state
                 dispatch(
