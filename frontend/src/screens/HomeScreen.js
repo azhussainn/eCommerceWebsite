@@ -8,7 +8,7 @@ import { listProducts } from '../actions/productActions'
 
 
 
-function HomeScreen() {
+function HomeScreen({history}) {
     const dispatch = useDispatch()
 
     //using selector we get select the productList
@@ -16,15 +16,17 @@ function HomeScreen() {
 
     const {error, loading, products} = productList
 
+    let keyword = history.location.search
+    console.log(keyword)
+
     //using this we will get the data
     //useEffect gets called every-time automatically
     useEffect(()=>{
 
         //calling listProducts
-        dispatch(listProducts())
+        dispatch(listProducts(keyword))
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [dispatch, keyword])
 
     return (
         <div>

@@ -24,13 +24,13 @@ import { PRODUCT_LIST_REQUEST,
     PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = () => async (dispatch) =>{
+export const listProducts = (keyword="") => async (dispatch) =>{
     try {
         //calling  productReducer with product list request
         dispatch({type : PRODUCT_LIST_REQUEST})
 
         // getting data of all products from the backend using axios
-        const {data} = await axios.get('/api/products/')
+        const {data} = await axios.get(`/api/products${keyword}`)
 
         //returning data to the product Reducer if no error
         dispatch({
